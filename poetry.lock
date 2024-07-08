@@ -157,6 +157,16 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "pytils"
+version = "0.4.1"
+description = "Russian-specific string utils"
+optional = false
+python-versions = "^3.7"
+files = [
+    {file = "pytils-0.4.1.tar.gz", hash = "sha256:aa109b1bc0ec4bdb7c9768520110348d8aeb0706600e6cf641272e6850e26eab"},
+]
+
+[[package]]
 name = "sqlparse"
 version = "0.5.0"
 description = "A non-validating SQL parser."
@@ -185,4 +195,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "8f9a9e40e3a299fb33c75205654af9fa852aaf3a6ca5eb5b7a83b8b31eebfc84"
+content-hash = "75e534eb15b56e3424f5c4cc135ef972457f2115bcfe21b1e34c7aa7bd2d7a55"
