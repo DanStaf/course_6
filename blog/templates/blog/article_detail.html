@@ -1,0 +1,56 @@
+{% extends 'main/base.html' %}
+{% load main_tags %}
+{% block content %}
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-4">Запись: {{ object.title }}</h1>
+</div>
+
+<div class="container">
+    <div class="row text-start">
+        <div class="col-lg-9 col-md-6 col-sm-12">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td class="w-25">Заголовок</td>
+                            <td>{{object.title}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Содержимое</td>
+                            <td>{{object.content}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Изображение (превью)</td>
+                            <td>
+                                <img class="card-img-top"
+                                     src="{% my_media object.photo %}"
+                                >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Дата создания</td>
+                            <td>{{object.created_at}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Признак публикации</td>
+                            <td>{{object.is_published}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">Количество просмотров</td>
+                            <td>{{object.views_qty}}</td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">slug</td>
+                            <td>{{object.slug}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
