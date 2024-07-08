@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 
 class Period(models.Model):
     """'раз в день', 1"""
@@ -48,6 +50,7 @@ class Client(models.Model):
     email = models.EmailField(verbose_name='Почта', unique=True)
     name = models.CharField(max_length=150, verbose_name='ФИО')
     comment = models.TextField(verbose_name='Комментарий')
+    owner = models.ForeignKey(User, null=True, blank=True, verbose_name='Владелец', on_delete=models.SET_NULL)
 
     def __str__(self):
         # Строковое отображение объекта
@@ -61,6 +64,7 @@ class Client(models.Model):
 class MailingText(models.Model):
     topic = models.TextField(verbose_name='Тема')
     message = models.TextField(verbose_name='Сообщение')
+    owner = models.ForeignKey(User, null=True, blank=True, verbose_name='Владелец', on_delete=models.SET_NULL)
 
     def __str__(self):
         # Строковое отображение объекта
@@ -83,6 +87,8 @@ class MailingSettings(models.Model):
 
     # many (clients) to many (settings)
     clients = models.ManyToManyField(Client)
+
+    owner = models.ForeignKey(User, null=True, blank=True, verbose_name='Владелец', on_delete=models.SET_NULL)
 
     def __str__(self):
         # Строковое отображение объекта
