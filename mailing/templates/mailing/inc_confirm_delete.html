@@ -11,9 +11,9 @@
                 <div class="card-body">
                     <form method="post">
                         {% csrf_token %}
-                        <p>Хотите удалить: "{{ object.name }}" ?</p>
+                        <p>Хотите удалить: "{{ object }}" ?</p>
                         <button type="submit" class="btn btn-danger">Подтвердить</button>
-                        <a href="/mailing/clients/" class="btn btn-warning">Отмена</a>
+                        <a href="/mailing/" class="btn btn-warning">Отмена</a>
                     </form>
                 </div>
             </div>

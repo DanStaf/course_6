@@ -69,7 +69,7 @@ class MailingText(models.Model):
     def __str__(self):
         # Строковое отображение объекта
         max_len = 10 if len(self.topic) > 10 else len(self.topic)
-        return f'MailingText: {self.topic[:max_len]}'
+        return f'MailingText: {self.topic[:max_len]}...'
         # return f'MailingText: {self.topic}'
 
     class Meta:

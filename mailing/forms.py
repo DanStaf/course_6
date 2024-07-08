@@ -1,5 +1,5 @@
 from django import forms
-from mailing.models import Client
+from mailing.models import Client, MailingText
 
 
 class StyleFormMixin:
@@ -17,4 +17,11 @@ class ClientForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Client
+        exclude = ('owner',)
+
+
+class MailingTextForm(StyleFormMixin, forms.ModelForm):
+
+    class Meta:
+        model = MailingText
         exclude = ('owner',)
