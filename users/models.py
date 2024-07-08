@@ -5,10 +5,10 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     username = None
 
-    email = models.EmailField(verbose_name='?????', unique=True)
-    avatar = models.ImageField(null=True, blank=True, verbose_name='??????')
-    phone = models.CharField(null=True, blank=True, max_length=150, verbose_name='???????')
-    country = models.CharField(null=True, blank=True, max_length=150, verbose_name='??????')
+    email = models.EmailField(verbose_name='Почта', unique=True)
+    avatar = models.ImageField(null=True, blank=True, verbose_name='Аватар')
+    phone = models.CharField(null=True, blank=True, max_length=150, verbose_name='Телефон')
+    country = models.CharField(null=True, blank=True, max_length=150, verbose_name='Страна')
 
     token = models.CharField(null=True, blank=True, max_length=150, verbose_name='Token')
 
