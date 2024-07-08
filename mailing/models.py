@@ -79,8 +79,8 @@ class MailingText(models.Model):
 
 class MailingSettings(models.Model):
     first_sent_datetime = models.DateTimeField(verbose_name='дата и время первой отправки')
-    period = models.CharField(max_length=150, verbose_name='периодичность')
-    status = models.ForeignKey(StatusMailing, null=True, verbose_name='Статус', on_delete=models.SET_NULL)
+    period = models.ForeignKey(Period, null=True, verbose_name='периодичность', on_delete=models.SET_NULL)
+    status = models.ForeignKey(StatusMailing, null=True, blank=True, verbose_name='Статус', on_delete=models.SET_NULL)
 
     # one (text) to many (settings)
     mailing_text = models.ForeignKey(MailingText, null=True, verbose_name='Текст рассылки', on_delete=models.SET_NULL)

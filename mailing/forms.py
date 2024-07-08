@@ -1,5 +1,6 @@
 from django import forms
-from mailing.models import Client, MailingText
+
+from mailing.models import Client, MailingText, MailingSettings
 
 
 class StyleFormMixin:
@@ -25,3 +26,15 @@ class MailingTextForm(StyleFormMixin, forms.ModelForm):
     class Meta:
         model = MailingText
         exclude = ('owner',)
+
+
+class MailingSettingsForm(StyleFormMixin, forms.ModelForm):
+
+    class Meta:
+        model = MailingSettings
+        exclude = ('owner', 'status')
+        widgets = {
+            'first_sent_datetime': forms.DateTimeInput(attrs={'type': 'datetime-local'})
+        }
+        # forms.SplitDateTimeWidget()
+        # forms.DateTimeInput(attrs={'type': 'datetime-local'}

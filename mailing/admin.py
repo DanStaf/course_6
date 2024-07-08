@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing.models import Client
+from mailing.models import Client, StatusAttempt, StatusMailing, Period
 
 
 # Register your models here.
@@ -8,3 +8,18 @@ from mailing.models import Client
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'email', 'comment')
+
+
+@admin.register(Period)
+class PeriodAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'days')
+
+
+@admin.register(StatusMailing)
+class StatusMailingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+
+
+@admin.register(StatusAttempt)
+class StatusAttemptAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
