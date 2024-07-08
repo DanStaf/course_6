@@ -6,4 +6,4 @@ from django.shortcuts import render
 def main_view(request):
 
     context = {"object": 'main'}
-    return render(request, 'main/test.html', context=context)
+    return render(request, 'main/home.html', context=context)
