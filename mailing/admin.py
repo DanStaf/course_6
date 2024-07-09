@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailing.models import Client, StatusAttempt, StatusMailing, Period
+from mailing.models import Client, StatusAttempt, StatusMailing, Period, MailingText, MailingSettings, MailingAttempt
 
 
 # Register your models here.
@@ -23,3 +23,8 @@ class StatusMailingAdmin(admin.ModelAdmin):
 @admin.register(StatusAttempt)
 class StatusAttemptAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
+
+
+admin.site.register(MailingText)
+admin.site.register(MailingSettings)
+admin.site.register(MailingAttempt)

@@ -5,12 +5,15 @@ from mailing.models import Client
 # from config.settings import CACHE_ENABLED
 
 
-def set_owner(self, form, object_is_new=True):
+def set_owner(self, form, object_is_new=True, status=None, status_model=None):
 
     self.object = form.save()
 
     if object_is_new:
         self.object.owner = self.request.user
+        if status is not None:
+            self.object.status = status_model.objects.get(name=status)
+
         self.object.save()
 
 
