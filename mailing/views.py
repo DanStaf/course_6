@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from mailing.forms import ClientForm, MailingTextForm, MailingSettingsForm
-from mailing.models import Client, MailingText, MailingSettings, StatusMailing
+from mailing.models import Client, MailingText, MailingSettings, StatusMailing, MailingAttempt
 from mailing.services import set_owner, check_user_is_owner_or_su
 
 
@@ -164,3 +164,10 @@ class MailingSettingsDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteV
 
     def test_func(self):
         return check_user_is_owner_or_su(self, MailingSettings)
+
+
+class MailingAttemptListView(LoginRequiredMixin, ListView):
+    """
+    Контроллер отвечающий за отображение списка попыток рассылок
+    """
+    model = MailingAttempt
