@@ -14,7 +14,7 @@
             <div class="card mb-4 box-shadow">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal" >
-                        <a href="/mailing/settings/{{ object.id }}">{{ object.mailing.mailing_text.topic }}</a>
+                        {{ object.mailing.mailing_text.topic }}
                     </h4>
                 </div>
                 <div class="card-body">
@@ -22,7 +22,7 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ object.sent_datetime }}</li>
                         <li>{{ object.status }}</li>
-                        <li>{{ object.server_reply }}</li>
+                        <li>server_reply: {{ object.server_reply }}</li>
                     </ul>
                 </div>
             </div>
