@@ -24,6 +24,7 @@
                             <button type="submit" class="btn btn-primary">Создать</button>
                         {% else %}
                             <button type="submit" class="btn btn-primary">Сохранить</button>
+                            <a class="p-2 btn btn-outline-danger" href="{% url 'users:user_delete' %}">Удалить</a>
                         {% endif %}
                     </form>
                 </div>

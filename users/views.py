@@ -5,7 +5,7 @@ import secrets
 from django.shortcuts import render, get_object_or_404, redirect
 from users.models import User
 from users.forms import RegisterForm, ProfileForm
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.views import PasswordResetView
 
@@ -44,6 +44,14 @@ class RegisterView(CreateView):
         )
 
         return super().form_valid(form)
+
+
+class UserDeleteView(DeleteView):
+    model = User
+    success_url = reverse_lazy('users:login')
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 
 def email_verification(request, token):
