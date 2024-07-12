@@ -9,31 +9,29 @@
 
     <div class="row text-center">
 
-        {% for object in object_list %}
-        <div class="col-3">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header">
-                    <h4 class="my-0 font-weight-normal" >
-                        {{ object.mailing.mailing_text.topic }}
-                    </h4>
-                </div>
-                <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Рассылка</th>
+                <th scope="col">Дата и Время</th>
+                <th scope="col">Статус</th>
+                <th scope="col">Ответ сервера</th>
+            </tr>
+            </thead>
 
-                    <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ object.sent_datetime }}</li>
-                        <li>{{ object.status }}</li>
-                        <li>server_reply: {{ object.server_reply }}</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        {% endfor %}
+            <tbody>
+            {% for object in object_list %}
+            <tr>
+                <td>{{ object.mailing.mailing_text.topic }}</td>
+                <td>{{ object.sent_datetime }}</td>
+                <td>{{ object.status }}</td>
+                <td>{{ object.server_reply }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
 
     </div>
 
 </div>
 {% endblock %}
-
-
-
-

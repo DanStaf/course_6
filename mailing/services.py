@@ -31,8 +31,7 @@ def check_user_is_owner_or_su(self, model_):
 
 def send_mailing():
 
-    zone = pytz.timezone(settings.TIME_ZONE)
-    current_datetime = datetime.now(zone)
+    current_datetime = get_current_datetime()
     # now: 13:43, got: 2024-07-11 10:43:31.192337+00:00
 
     mailings = MailingSettings.objects.filter(first_sent_datetime__lte=current_datetime).filter(
@@ -106,3 +105,11 @@ def start_scheduler():
 
     if not scheduler.running:
         scheduler.start()
+
+
+def get_current_datetime():
+
+    zone = pytz.timezone(settings.TIME_ZONE)
+    current_datetime = datetime.now(zone)
+
+    return current_datetime

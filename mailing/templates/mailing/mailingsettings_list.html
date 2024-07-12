@@ -25,6 +25,13 @@
                         <li>{{ object.period }}</li>
                         <li>{{ object.status }}</li>
                     </ul>
+                    <a class="p-2 btn btn-outline-primary" href="/mailing/settings/change_status/{{ object.id }}">
+                        {% if object.status != object.COMPLETED %}
+                            Завершить
+                        {% else %}
+                            Запустить
+                        {% endif %}
+                    </a>
                 </div>
             </div>
         </div>
@@ -34,7 +41,3 @@
 
 </div>
 {% endblock %}
-
-
-
-

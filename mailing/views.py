@@ -1,13 +1,13 @@
 from random import shuffle
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from mailing.forms import ClientForm, MailingTextForm, MailingSettingsForm
 from mailing.models import Client, MailingText, MailingSettings, MailingAttempt
-from mailing.services import set_owner, check_user_is_owner_or_su
+from mailing.services import set_owner, check_user_is_owner_or_su, get_current_datetime
 
 from blog.models import Article
 
@@ -182,6 +182,31 @@ class MailingSettingsDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteV
 
     def test_func(self):
         return check_user_is_owner_or_su(self, MailingSettings)
+
+
+def change_status(request, pk):
+
+    mailing = get_object_or_404(MailingSettings, pk=pk)
+
+    if mailing is None:
+        return render(request, 'mailing/home.html')
+    else:
+
+        if mailing.status == mailing.COMPLETED:
+
+            if mailing.first_sent_datetime < get_current_datetime():
+                mailing.status = mailing.STARTED
+            else:
+                mailing.status = mailing.CREATED
+        else:
+            mailing.status = mailing.COMPLETED
+
+        mailing.save()
+
+        return redirect('mailing:settings_list')
+
+
+#########
 
 
 class MailingAttemptListView(LoginRequiredMixin, ListView):
