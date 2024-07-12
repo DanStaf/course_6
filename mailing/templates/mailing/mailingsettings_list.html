@@ -11,7 +11,7 @@
     <div class="row text-center">
 
         {% for object in object_list %}
-        {% if object.owner == user %}
+        {% if object.owner == user or perms.mailing.view_all_mailings %}
         <div class="col-3">
             <div class="card mb-4 box-shadow {% if not object.owner == user %} bg-secondary-subtle {% endif %}">
                 <div class="card-header">

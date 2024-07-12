@@ -193,8 +193,8 @@ def change_status(request, pk):
     if mailing is None:
         return render(request, 'mailing/home.html')
     else:
-
-        if not (request.user == mailing.owner) or request.user.is_superuser:
+        if not (request.user == mailing.owner or
+                request.user.has_perm('mailing.deactivate_mailing')):
             return render(request, 'mailing/home.html')
         else:
 

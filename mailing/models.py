@@ -80,6 +80,10 @@ class MailingSettings(models.Model):
     class Meta:
         verbose_name = 'рассылка (настройки)'
         verbose_name_plural = 'рассылки (настройки)'
+        permissions = [
+            ('deactivate_mailing', 'Can deactivate mailing'),
+            ('view_all_mailings', 'Can view all mailings'),
+        ]
 
 
 class MailingAttempt(models.Model):
