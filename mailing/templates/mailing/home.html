@@ -4,15 +4,31 @@
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
     <h1 class="display-4">Рассылка-Апп</h1>
     <p class="lead">Мощный инструмент для мгновенной рассылки</p>
-    <a class="p-2 btn btn-outline-primary" href="product/create">+</a>
 </div>
 
 <div class="container">
 
     <div class="row text-center">
 
-        % главная страница %
+        <div class="col-6">
+            <h1 class="card-title pricing-card-title">Рассылки:</h1>
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3 text-center">
+                <li>Всего рассылок: <h1 class="card-title pricing-card-title">{{total_mailings}}</h1></li>
+                <li>Активных рассылок: <h1 class="card-title pricing-card-title">{{started_mailings}}</h1></li>
+                <li>Количество уникальных клиентов для рассылок: <h1 class="card-title pricing-card-title">{{unique_clients}}</h1></li>
+            </ul>
+        </div>
+        <div class="col-6">
+            <h1 class="card-title pricing-card-title">Блог:</h1>
 
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3 text-center">
+                {% for article in blog_list %}
+                    <li><a href="/blog/{{ article.id }}">{{ article.title }}</a></li>
+                {% endfor %}
+            </ul>
+
+
+        </div>
     </div>
 
 </div>

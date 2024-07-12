@@ -11,8 +11,9 @@
     <div class="row text-center">
 
         {% for object in object_list %}
+        {% if object.owner == user or perms.mailing.view_all_mailings %}
         <div class="col-3">
-            <div class="card mb-4 box-shadow">
+            <div class="card mb-4 box-shadow {% if not object.owner == user %} bg-secondary-subtle {% endif %}">
                 <div class="card-header">
                     <h4 class="my-0 font-weight-normal" >
                         <a href="/mailing/settings/{{ object.id }}">{{ object.mailing_text.topic }}</a>
@@ -25,16 +26,20 @@
                         <li>{{ object.period }}</li>
                         <li>{{ object.status }}</li>
                     </ul>
+                    <a class="p-2 btn btn-outline-primary" href="/mailing/settings/change_status/{{ object.id }}">
+                        {% if object.status != object.COMPLETED %}
+                            Завершить
+                        {% else %}
+                            Запустить
+                        {% endif %}
+                    </a>
                 </div>
             </div>
         </div>
+        {% endif %}
         {% endfor %}
 
     </div>
 
 </div>
 {% endblock %}
-
-
-
-

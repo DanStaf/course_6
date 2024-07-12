@@ -1,15 +1,36 @@
+from random import shuffle
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from mailing.forms import ClientForm, MailingTextForm, MailingSettingsForm
 from mailing.models import Client, MailingText, MailingSettings, MailingAttempt
-from mailing.services import set_owner, check_user_is_owner_or_su
+from mailing.services import set_owner, check_user_is_owner_or_su, get_current_datetime
+
+from blog.models import Article
 
 
+@cache_page(60)
 def main_view(request):
-    context = {"object": 'mailing'}
+    a_list = [item for item in Article.objects.all()]
+    shuffle(a_list)
+    max_len = 3
+    articles_short_list = a_list if len(a_list) < max_len else a_list[:max_len]
+
+    total_mailings = len(MailingSettings.objects.all())
+    started_mailings = len(MailingSettings.objects.filter(status=MailingSettings.STARTED))
+
+    unique_clients = len(Client.objects.all())
+
+    context = {
+        "blog_list": articles_short_list,
+        "total_mailings": total_mailings,
+        "started_mailings": started_mailings,
+        "unique_clients": unique_clients
+    }
     return render(request, 'mailing/home.html', context=context)
 
 
@@ -166,8 +187,38 @@ class MailingSettingsDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteV
         return check_user_is_owner_or_su(self, MailingSettings)
 
 
+def change_status(request, pk):
+
+    mailing = get_object_or_404(MailingSettings, pk=pk)
+
+    if mailing is None:
+        return render(request, 'mailing/home.html')
+    else:
+        if not (request.user == mailing.owner or
+                request.user.has_perm('mailing.deactivate_mailing')):
+            return render(request, 'mailing/home.html')
+        else:
+
+            if mailing.status == mailing.COMPLETED:
+
+                if mailing.first_sent_datetime < get_current_datetime():
+                    mailing.status = mailing.STARTED
+                else:
+                    mailing.status = mailing.CREATED
+            else:
+                mailing.status = mailing.COMPLETED
+
+            mailing.save()
+
+            return redirect('mailing:settings_list')
+
+
+#########
+
+
 class MailingAttemptListView(LoginRequiredMixin, ListView):
     """
     Контроллер отвечающий за отображение списка попыток рассылок
     """
     model = MailingAttempt
+    login_url = "/users/login/"

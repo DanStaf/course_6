@@ -15,6 +15,13 @@
             <a class="p-2 btn btn-outline-primary" href="{% url 'users:register' %}">Register</a>
         {% endif %}
     </nav>
+
+    {% if perms.users.view_all_users %}
+    <nav class="ms-5">
+        <a class="p-2 btn btn-outline-primary" href="{% url 'users:users' %}"> Users</a>
+    </nav>
+    {% endif %}
+
     {% if user.is_superuser %}
     <nav class="ms-5">
         <a class="p-2 btn btn-outline-danger" href="/admin/"> Admin</a>
