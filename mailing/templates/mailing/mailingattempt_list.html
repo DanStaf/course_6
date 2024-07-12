@@ -21,12 +21,14 @@
 
             <tbody>
             {% for object in object_list %}
-            <tr>
+            {% if object.owner == user %}
+            <tr class="{% if not object.owner == user %} bg-secondary-subtle {% endif %}">
                 <td>{{ object.mailing.mailing_text.topic }}</td>
                 <td>{{ object.sent_datetime }}</td>
                 <td>{{ object.status }}</td>
                 <td>{{ object.server_reply }}</td>
             </tr>
+            {% endif %}
             {% endfor %}
             </tbody>
         </table>

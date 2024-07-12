@@ -1,5 +1,6 @@
 from random import shuffle
 
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
@@ -10,6 +11,7 @@ from mailing.models import Client, MailingText, MailingSettings, MailingAttempt
 from mailing.services import set_owner, check_user_is_owner_or_su, get_current_datetime
 
 from blog.models import Article
+
 
 def main_view(request):
     a_list = [item for item in Article.objects.all()]
@@ -192,18 +194,22 @@ def change_status(request, pk):
         return render(request, 'mailing/home.html')
     else:
 
-        if mailing.status == mailing.COMPLETED:
-
-            if mailing.first_sent_datetime < get_current_datetime():
-                mailing.status = mailing.STARTED
-            else:
-                mailing.status = mailing.CREATED
+        if not (request.user == mailing.owner) or request.user.is_superuser:
+            return render(request, 'mailing/home.html')
         else:
-            mailing.status = mailing.COMPLETED
 
-        mailing.save()
+            if mailing.status == mailing.COMPLETED:
 
-        return redirect('mailing:settings_list')
+                if mailing.first_sent_datetime < get_current_datetime():
+                    mailing.status = mailing.STARTED
+                else:
+                    mailing.status = mailing.CREATED
+            else:
+                mailing.status = mailing.COMPLETED
+
+            mailing.save()
+
+            return redirect('mailing:settings_list')
 
 
 #########
@@ -214,3 +220,4 @@ class MailingAttemptListView(LoginRequiredMixin, ListView):
     Контроллер отвечающий за отображение списка попыток рассылок
     """
     model = MailingAttempt
+    login_url = "/users/login/"
