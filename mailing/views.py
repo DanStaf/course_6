@@ -1,9 +1,9 @@
 from random import shuffle
 
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
+from django.views.decorators.cache import cache_page
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 from mailing.forms import ClientForm, MailingTextForm, MailingSettingsForm
@@ -13,6 +13,7 @@ from mailing.services import set_owner, check_user_is_owner_or_su, get_current_d
 from blog.models import Article
 
 
+@cache_page(60)
 def main_view(request):
     a_list = [item for item in Article.objects.all()]
     shuffle(a_list)

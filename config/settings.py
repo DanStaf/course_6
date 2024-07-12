@@ -145,3 +145,15 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 RUN_MAILING_SCHEDULE = os.getenv('RUN_MAILING_SCHEDULE')
+
+
+CACHE_ENABLED = os.getenv('CACHE_ENABLED')
+
+if CACHE_ENABLED:
+    CACHES = {
+        "default": {
+            "BACKEND": os.getenv('CACHES_BACKEND'),
+            "LOCATION": os.getenv('CACHES_LOCATION'),
+            "TIMEOUT": os.getenv('CACHES_TIMEOUT')
+        }
+    }
